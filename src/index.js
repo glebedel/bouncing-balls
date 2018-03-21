@@ -1,3 +1,4 @@
 /* @flow */
+import BouncingBalls from "./BouncingBalls";
 
-export * from './button';
+module.exports = BouncingBalls;

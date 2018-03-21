@@ -1,3 +1,3 @@
 /* @flow */
 
-declare var __TEST__ : boolean;
+declare var __TEST__: boolean;

@@ -1,11 +1,12 @@
 {
-  "name": "grumbler",
+  "name": "bouncing-balls",
   "version": "1.0.2",
-  "description": "Javascript module template.",
+  "description": "Bouncing balls canvas generator.",
   "main": "index.js",
   "scripts": {
     "setup": "npm install && npm run flow-typed",
     "lint": "eslint src/ test/ *.js",
+    "docs": "documentation readme src --section=API",
     "flow-typed": "flow-typed install",
     "flow": "flow",
     "flow:build": "flow gen-flow-files ./src/index.js --out-dir ./dist/module",
@@ -35,7 +36,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/krakenjs/grumbler.git"
+    "url": "git://github.com/glebedel/bouncing-balls"
   },
   "keywords": [
     "template"
@@ -48,8 +49,16 @@
   ],
   "readmeFilename": "README.md",
   "devDependencies": {
-    "flow-bin": "^0.56.0",
+    "babel-eslint": "^8.2.2",
+    "documentation": "^6.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype-errors": "^3.5.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "flow-bin": "^0.68.0",
+    "flow-typed": "^2.4.0",
     "grumbler-scripts": "^1.0.0",
-    "mocha": "^5.0.4"
+    "mocha": "^5.0.4",
+    "prettier": "^1.11.1"
   }
 }

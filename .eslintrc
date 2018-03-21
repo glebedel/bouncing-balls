@@ -1,0 +1,28 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb-base", "prettier", "plugin:flowtype/recommended"],
+  "plugins": ["prettier", "flowtype", "flowtype-errors"],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "karma.conf.js",
+          "webpack.config.js"
+        ]
+      }
+    ],
+    "flowtype-errors/show-errors": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "none"
+      }
+    ],
+    "no-param-reassign": "off"
+  }
+}
