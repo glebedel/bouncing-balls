@@ -4,10 +4,9 @@
 
 <body>
   <script src="../dist/bouncingballs.js"></script>
-  <canvas id="bb-canvas" style="width: 100%; height:100%"></canvas>
+  <canvas id="bb-canvas" width="600px" height="400px" style="border: 1px solid black"></canvas>
   <script>
-		var bb = new BouncingBalls()
-		bb.init({ canvas: document.getElementById('bb-canvas') });
+    var bb = new BouncingBalls({ canvas: document.getElementById('bb-canvas') })
 
   </script>
 </body>
