@@ -8,7 +8,7 @@ const MODULE_NAME = "BouncingBalls";
 
 export const WEBPACK_CONFIG = getWebpackConfig({
   filename: `${FILE_NAME}.js`,
-  modulename: MODULE_NAME
+  modulename: MODULE_NAME,
   options: {
     devtool: "source-map"
   },
