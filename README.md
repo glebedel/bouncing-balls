@@ -11,7 +11,7 @@
 ## bookmarklet / developer console
 
 copy paste the following code as a bookmark's url (make sure it's prefixed by `javascript:`)
-[https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js]()
+[](https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js)
 Then click on the bookmarklet while you are on a page ([google.com](www.google.com) for example)
 
 Click around the page to create balls which will bounce off of the bottom of the page
