@@ -12,136 +12,26 @@ type Force = {
 type Coordinates = {
   x: number,
   y: number
-};
-/**
- * @classdesc Ball class to track position and forces applying onto a ball
- */
-class Ball {
-  /**
-   * Creates an instance of Ball.
-   * @constructs Ball
-   * @param {Coordinates} position
-   * @param {{
-   *       radius: number, to determin size of the ball
-   *       color: string, color (random color by default)
-   *       gravity: number, gravity force y translator
-   *       speed: number, speed (multiplicator effect on x/y translations for each ball move)
-   *       gravityDecayRatio: number (multiplicator on each forces x/y translation after each ball move)
-   *     }} [settings={
-   *       radius: 10,
-   *       color: randomColor(),
-   *       gravity: 1,
-   *       speed: 5,
-   *       gravityDecayRatio: 1.02
-   *     }]
-   * @param {Force} [velocity={
-   *       x: (Math.random() - 0.5) * 2,
-   *       y: (Math.random() - 0.5) * 2,
-   *       decayRatio: 1
-   *     }]
-   * @memberof Ball
-   */
-  constructor(
-    position: Coordinates,
-    settings: {
-      radius: number,
-      color: string,
-      gravity: number,
-      speed: number,
-      gravityDecayRatio: number
-    } = {
-      radius: 10,
-      color: randomColor(),
-      gravity: 1,
-      speed: 5,
-      gravityDecayRatio: 1.02
-    },
-    velocity: Force = {
-      x: (Math.random() - 0.5) * 2,
-      y: (Math.random() - 0.5) * 2,
-      decayRatio: 1
-    }
-  ) {
-    this.forces = {
-      gravity: {
-        x: 0,
-        y: settings.gravity,
-        decayRatio: settings.gravityDecayRatio
-      },
-      velocity
-    };
-    this.gravity = settings.gravity;
-    this.speed = settings.speed;
-    this.radius = settings.radius;
-    // default position to top left
-    this.pos = position || { x: this.radius, y: this.radius };
-    this.color = settings.color;
-  }
-  /**
-   * Get the next coordinates of the ball based on current position and forces
-   * @returns {Coordinates} x/y coordinates
-   * @memberof Ball
-   */
-  getNextPos(): Coordinates {
-    const aggregate = this.aggregateForces();
-    const newPos: Coordinates = {
-      x: this.pos.x + aggregate.x * this.speed,
-      y: this.pos.y + aggregate.y * this.speed
-    };
-    return newPos;
-  }
-  /**
-   * reset the ball position
-   * @param {Coordinates} position new coordinates where the ball must be set to
-   * @memberof Ball
-   */
-  setPos(position: Coordinates) {
-    this.pos = position;
-  }
-  /**
-   * Sum up all x/y translations based on x/y components of each force
-   * @returns {Coordinates} x/y object reflecting summed up translations
-   * @memberof Ball
-   */
-  aggregateForces(): Coordinates {
-    return Object.values(this.forces).reduce(
-      (aggregate: Coordinates, { x, y }: Force) => {
-        aggregate.x += x || 0;
-        aggregate.y += y || 0;
-        return aggregate;
-      },
-      { x: 0, y: 0 }
-    );
-  }
-  /**
-   * apply the decay ratio of each force to their x/y components
-   * @memberof Ball
-   */
-  decayForces() {
-    Object.values(this.forces).forEach((force: Force) => {
-      force.x *= force.decayRatio || 1;
-      force.y *= force.decayRatio || 1;
-    });
-  }
-  /**
-   * Move the ball to the next coordinates.
-   * Also apply the decay ratio to each force (see {@link Ball~decayForces}) after setting new coordinates
-   * @param {Coordinates} [nextPos=this.getNextPos()] coordinates to move the ball to. Uses {@link Ball~setPos}
-   * @returns {Coordinates} the new coordinates where the ball has been moved to
-   * @memberof Ball
-   */
-  moveNext(nextPos: Coordinates = this.getNextPos()): Coordinates {
-    this.setPos(nextPos);
-    this.decayForces();
-    return nextPos;
-  }
-}
 /**
  *
  * @classdesc Add bouncing balls onto a canvas
+ * @class BouncingBalls
  * @export
  */
 export default class BouncingBalls {
+  /**
+   * Creates an instance of BouncingBalls.
+   * @param {HTMLCanvasElement} [$0.canvas=document.createElement("canvas")] canvas for bouncing balls
+   * @param {HTMLElement} [$0.container=window.document.body] container where canvas is. Used to set canvas' default width/height if canvas doesn't have width/height
+   * @param {Object} settings Bouncing balls parameters
+   * @param {number} [settings.gravity=1] gravity parameter for all balls created {@see #Balls}
+   * @param {number} [settings.speed=5] speed parameter for all balls created {@see #Balls}
+   * @param {number} [settings.gravityDecayRatio=1.02] gravity decay parameter for all balls created {@see #Balls}
+   * @param {number} [settings.bounceDecayRatio=0.965] bouncing decay applied to bounce force when object bounces off walls/floor
+   * @param {number} [settings.drawInterval=20] in ms time between each redraws of the canvas (refresh of balls positions)
+   * @param {boolean} [settings.click=true] whether or not clicks in canvas should create balls
+   * @memberof BouncingBalls
+   */
   constructor(
     {
       canvas = document.createElement("canvas"),
@@ -172,7 +62,6 @@ export default class BouncingBalls {
     this.balls = [];
     this.settings = settings;
     // set bounds of canvas to its containers width/height
-    console.log(this.canvas.width);
     this.canvas.width = this.canvas.width || this.container.clientWidth;
     this.canvas.height = this.canvas.height || this.container.clientHeight;
     // add click event handler to create balls if specified in settings
@@ -283,7 +172,6 @@ export default class BouncingBalls {
    * draw all the BouncingBalls' balls on its canvas
    * If parameter is true then it launches the drawing loop
    * @param {Boolean} [triggered=false] whether or not function is being manually triggered or triggered via timeout loop
-   * @returns
    * @memberof BouncingBalls
    */
   draw(triggered: Boolean = false) {
@@ -331,4 +219,121 @@ export default class BouncingBalls {
       }
     );
   };
+}
+
+/**
+ * @classdesc Ball object to store & calculate information (mainly position) of a specific ball
+ * @class Ball
+ */
+class Ball {
+  /**
+   * Creates an instance of Ball.
+   * @constructs Ball
+   * @param {Coordinates} position
+   * @param {Object} settings settings of the ball
+   * @param {Number} [settings.radius] radius of the ball
+   * @param {String} [settings.color=randomColor()] color (random color by default {@see ./src/Colors.js})
+   * @param {Number} [settings.gravity=1] force y translator
+   * @param {Number} [settings.speed=5] (multiplicator effect on x/y translations for each ball move)
+   * @param {Number} [settings.gravityDecayRatio=1.02] multiplicator on each forces x/y translation after each ball move
+   * @param {Force}  [velocity={}] force to be applied on creation of the ball
+   * @param {number} [velocity.x=(Math.random() 0.5) * 2] velocity's x translation component. Defaults between 1 & -1
+   * @param {number} [velocity.y=(Math.random() 0.5) * 2] velocity's x translation component. Defaults between 1 & -1
+   * @param {number} [velocity.decayRatio=1] velocity's force decay ratio. (1 by default so doesn't weaken)
+   * @memberof Ball
+   */
+  constructor(
+    position: Coordinates,
+    settings: {
+      radius: number,
+      color: string,
+      gravity: number,
+      speed: number,
+      gravityDecayRatio: number
+    } = {
+      radius: 10,
+      color: randomColor(),
+      gravity: 1,
+      speed: 5,
+      gravityDecayRatio: 1.02
+    },
+    velocity: Force = {
+      x: (Math.random() - 0.5) * 2,
+      y: (Math.random() - 0.5) * 2,
+      decayRatio: 1
+    }
+  ) {
+    this.forces = {
+      gravity: {
+        x: 0,
+        y: settings.gravity,
+        decayRatio: settings.gravityDecayRatio
+      },
+      velocity
+    };
+    this.gravity = settings.gravity;
+    this.speed = settings.speed;
+    this.radius = settings.radius;
+    // default position to top left
+    this.pos = position || { x: this.radius, y: this.radius };
+    this.color = settings.color;
+  }
+  /**
+   * Get the next coordinates of the ball based on current position and forces
+   * @returns {Coordinates} x/y coordinates
+   * @memberof Ball
+   */
+  getNextPos(): Coordinates {
+    const aggregate = this.aggregateForces();
+    const newPos: Coordinates = {
+      x: this.pos.x + aggregate.x * this.speed,
+      y: this.pos.y + aggregate.y * this.speed
+    };
+    return newPos;
+  }
+  /**
+   * reset the ball position
+   * @param {Coordinates} position new coordinates where the ball must be set to
+   * @memberof Ball
+   */
+  setPos(position: Coordinates) {
+    this.pos = position;
+  }
+  /**
+   * Sum up all x/y translations based on x/y components of each force
+   * @returns {Coordinates} x/y object reflecting summed up translations
+   * @memberof Ball
+   */
+  aggregateForces(): Coordinates {
+    return Object.values(this.forces).reduce(
+      (aggregate: Coordinates, { x, y }: Force) => {
+        aggregate.x += x || 0;
+        aggregate.y += y || 0;
+        return aggregate;
+      },
+      { x: 0, y: 0 }
+    );
+  }
+  /**
+   * apply the decay ratio of each force to their x/y components
+   * @memberof Ball
+   */
+  decayForces() {
+    Object.values(this.forces).forEach((force: Force) => {
+      force.x *= force.decayRatio || 1;
+      force.y *= force.decayRatio || 1;
+    });
+  }
+  /**
+   * Move the ball to the next coordinates.
+   * Also apply the decay ratio to each force (see {@link Ball~decayForces}) after setting new coordinates
+   * @param {Coordinates} [nextPos=this.getNextPos()] coordinates to move the ball to. Uses {@link Ball~setPos}
+   * @returns {Coordinates} the new coordinates where the ball has been moved to
+   * @memberof Ball
+   */
+  moveNext(nextPos: Coordinates = this.getNextPos()): Coordinates {
+    this.setPos(nextPos);
+    this.decayForces();
+    return nextPos;
+  }
 }

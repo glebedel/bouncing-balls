@@ -6,7 +6,7 @@
   "scripts": {
     "setup": "npm install && npm run flow-typed",
     "lint": "eslint src/ test/ *.js",
-    "docs": "documentation readme src --section=API",
+    "docs": "doxdox src/**/*.js --layout markdown --output DOCUMENTATION.md",
     "flow-typed": "flow-typed install",
     "flow": "flow",
     "flow:build": "flow gen-flow-files ./src/index.js --out-dir ./dist/module",
@@ -14,7 +14,7 @@
     "babel": "babel src/ --out-dir dist/module",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "test": "npm run lint && npm run flow && npm run karma",
-    "build": "npm run test && npm run babel && npm run webpack && npm run flow:build",
+    "build": "npm run test && npm run babel && npm run webpack && npm run flow:build && npm run docs",
     "release": "./publish.sh",
     "release:patch": "./publish.sh patch",
     "release:minor": "./publish.sh minor",
@@ -50,7 +50,7 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "babel-eslint": "^8.2.2",
-    "documentation": "^6.1.0",
+    "doxdox": "^2.0.3",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-flowtype-errors": "^3.5.1",
