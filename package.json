@@ -9,7 +9,7 @@
     "docs": "documentation readme src/**/*.js --section=API",
     "flow-typed": "flow-typed install",
     "flow": "flow check",
-    "flow:build": "flow gen-flow-files ./src/index.js --out-dir ./dist/module",
+    "flow:build": "flow start && flow gen-flow-files ./src/index.js --out-dir ./dist/module && flow stop",
     "karma": "cross-env NODE_ENV=test babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/karma start",
     "babel": "babel src/ --out-dir dist/module",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
