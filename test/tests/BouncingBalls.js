@@ -55,15 +55,4 @@ describe("create balls", () => {
       done();
     }, bb1.settings.drawInterval + 1);
   });
-  it("ball bounces off the floor", done => {
-    // move the balls very close to the floor
-    b1.pos.y = bb1.canvas.height - b1.radius - 1;
-    b2.pos.y = bb2.canvas.height - b2.radius - 1;
-    setTimeout(() => {
-      expect(b1.pos.y).to.be.lt(bb1.canvas.height - b1.radius - 1);
-      expect(b2.pos.y).to.be.lt(bb2.canvas.height - b2.radius - 1);
-      done();
-      // wait for at least 2 draws
-    }, bb1.settings.drawInterval * 10 + 1);
-  });
 });
