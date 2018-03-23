@@ -4,11 +4,19 @@
 
 ## webpage
 
-[Using existing canvas or a defined container](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/index.html)
+[Using existing canvas or a defined container](http://htmlpreview.github.com/?https://github.com/glebedel/bouncing-balls/blob/master/demo/index.html)
 
-[Covers the document body](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/fullscreen.html)
+[Covers the document body](http://htmlpreview.github.com/?https://github.com/glebedel/bouncing-balls/blob/master/demo/fullscreen.html)
 
-## bookmarklet
+## bookmarklet / developer console
+
+copy paste the following code as a bookmark's url (make sure it's prefixed by `javascript:`)
+[https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js]()
+Then click on the bookmarklet while you are on a page ([google.com](www.google.com) for example)
+
+Click around the page to create balls which will bounce off of the bottom of the page
+
+Alternatively you can simply copy paste the content of [the file](https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js) into the developer console.
 
 ## Usage
 
