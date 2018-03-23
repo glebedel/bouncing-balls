@@ -1,11 +1,111 @@
 # Bouncing Balls
 
+
+## Usage
+
+### Existing canvas
+
+Create an instance of bouncing balls with an existing canvas element. See [demo/index.html]() code https://github.com/git/git/blob/master/demo/index.html#L5-L12
+
+```html
+<body>
+  <script src="../dist/bouncingballs.js"></script>
+  <canvas id="bb-canvas" width="600px" height="400px" style="border: 1px solid black"></canvas>
+</body>
+```
+
+```javascript
+var bb = new BouncingBalls({ canvas: document.getElementById("bb-canvas") });
+```
+
+This will use the bassed canvas element as the BouncingBall play ground. By default balls are created on click (see [Bouncing Balls constructor parameter](#bouncingBalls)).
+
+### Without specified canvas but in a container
+
+Create an instance of bouncing balls with an existing canvas element. See [demo/index.html]() code https://github.com/git/git/blob/master/demo/index.html#L15-L20
+
+```html
+<body>
+  <script src="../dist/bouncingballs.js"></script>
+    <div id="bb-container" style="width:600px;height:400px;border: 1px solid blue"></div>
+</body>
+```
+
+```javascript
+var bb = new BouncingBalls({
+	container: document.getElementById("bb-container")
+});
+```
+
+### Manually add a ball
+
+```javascript
+bb.addBall(); // creates a ball at the top left of the canvas and start drawing loop with a random x/y (-1 to 1) velocity (random starting direction)
+```
+
+```javascript
+bb.addBall({ x: 50, y: 50 }); // creates a ball at coordinates 50,50 within canvas with a random x/y (-1 to 1) velocity (random starting direction)
+```
+
+### Play with parameters
+
+Initialise BouncingBall area with very slow speed (default is 5)
+
+```javascript
+var bb = new BouncingBalls(
+	{ container: document.getElementById("bb-container") },
+	{ speed: 1 } // 5 times slower
+);
+```
+
+If the BouncingBalls instance is already created, you can directly edit the speed property
+
+``` javascript
+var bb = new BouncingBalls({
+	container: document.getElementById("bb-container")
+});
+bb.speed = 15; // 3 times faster
+```
+
+### Stop/resume drawing loop
+
+```javascript
+bb.stop(); // stops the drawing loop (freezes the animation)
+```
+
+```javascript
+bb.start(); // starts/resume the drawing loop (unfreeze the animation)
+```
+
+## Demos
+
+## webpage
+
+[Using existing canvas or a defined container](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/index.html)
+
+[Covers the document body](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/fullscreen.html)
+
+## bookmarklet
+
 ## Tools
 
 ### Grumbler
 
 Gumbler boilerplate used (A template for writing distributable javascript libraries.): <https://medium.com/@bluepnume/introducing-grumbler-an-opinionated-javascript-module-template-612245e06d00>
 
+### Launching localhosted demos
+
+```bash
+npm install
+npm run webpack -- --watch
+```
+in another terminal:
+
+```bash
+http-server .
+```
+
+Go to [http://localhost:8080/demo/index.html]() or [http://localhost:8080/demo/index.html]() in your browser of choice.
 
 #### Building
 
@@ -15,12 +115,12 @@ npm run build
 
 #### Tests
 
--   Edit tests in `./test/tests`
--   Run the tests:
+* Edit tests in `./test/tests`
+* Run the tests:
 
-    ```bash
-    npm run test
-    ```
+  ```bash
+  npm run test
+  ```
 
 #### Testing with different/multiple browsers
 
@@ -38,77 +138,36 @@ npm run karma -- --browser=PhantomJS,Chrome,Safari,Firefox
 npm run karma -- --browser=Chrome --keep-open
 ```
 
-
-## Usage
-
-### Existing canvas
-
-Create an instance of bouncing balls with an existing canvas element. See [demo/index.html]() code https://github.com/git/git/blob/master/demo/index.html#L5-L12
-```html
-<body>
-  <script src="../dist/bouncingballs.js"></script>
-  <canvas id="bb-canvas" width="600px" height="400px" style="border: 1px solid black"></canvas>
-</body>
-```
-```javascript
-	var bb = new BouncingBalls({ canvas: document.getElementById('bb-canvas') })
-```
-
-This will use the bassed canvas element as the BouncingBall play ground. By default balls are created on click (see [Bouncing Balls constructor parameter](#bouncingBalls)).
-
-### Without specified canvas but in a container
-
-Create an instance of bouncing balls with an existing canvas element. See [demo/index.html]() code https://github.com/git/git/blob/master/demo/index.html#L15-L20
-```html
-<body>
-  <script src="../dist/bouncingballs.js"></script>
-  <div id="div-container">
-    <h1>Existing Canvas</h1>
-    <div id="bb-container" style="width:600px;height:400px;border: 1px solid blue"></div>
-  </div>
-</body>
-```
-```javascript
-      var bb2 = new BouncingBalls({ container: document.getElementById('bb-container') });
-```
-
-## Demos
-
-[Declared canvas or within container](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/index.html)
-
-[Covers the document body](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/fullscreen.html)
-
-
 # API Doc
 
 <!-- Generated by documentation.js. Update this documentation by updating the source code. -->
 
 ### Table of Contents
 
--   [BouncingBalls](#bouncingballs)
-    -   [drawBall](#drawball)
-    -   [isDrawing](#isdrawing)
-    -   [stop](#stop)
-    -   [start](#start)
-    -   [moveBall](#moveball)
-    -   [addBall](#addball)
-    -   [draw](#draw)
-    -   [ballMouseHandler](#ballmousehandler)
--   [Ball](#ball)
-    -   [getNextPos](#getnextpos)
-    -   [setPos](#setpos)
-    -   [aggregateForces](#aggregateforces)
-    -   [decayForces](#decayforces)
-    -   [moveNext](#movenext)
+* [BouncingBalls](#bouncingballs)
+  * [drawBall](#drawball)
+  * [isDrawing](#isdrawing)
+  * [stop](#stop)
+  * [start](#start)
+  * [moveBall](#moveball)
+  * [addBall](#addball)
+  * [draw](#draw)
+  * [ballMouseHandler](#ballmousehandler)
+* [Ball](#ball)
+  * [getNextPos](#getnextpos)
+  * [setPos](#setpos)
+  * [aggregateForces](#aggregateforces)
+  * [decayForces](#decayforces)
+  * [moveNext](#movenext)
 
 ## BouncingBalls
 
 **Parameters**
 
--   `$0` **any** 
-    -   `$0.canvas`   (optional, default `document.createElement("canvas")`)
-    -   `$0.container`   (optional, default `window.document.body`)
--   `settings` **{gravity: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), speed: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), click: [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean), collisionRatio: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), drawInterval: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}**  (optional, default `{gravity:1,speed:5,bounceDecayRatio:0.965,gravityDecayRatio:1.02,click:true,collisionRatio:0.98,drawInterval:20}`)
+* `$0` **any**
+  * `$0.canvas` (optional, default `document.createElement("canvas")`)
+  * `$0.container` (optional, default `window.document.body`)
+* `settings` **{gravity: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), speed: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), click: [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean), collisionRatio: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), drawInterval: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}** (optional, default `{gravity:1,speed:5,bounceDecayRatio:0.965,gravityDecayRatio:1.02,click:true,collisionRatio:0.98,drawInterval:20}`)
 
 ### drawBall
 
@@ -116,7 +175,7 @@ Draw ball on BouncingBalls' canvas
 
 **Parameters**
 
--   `ball` **[Ball](#ball)** ball to draw
+* `ball` **[Ball](#ball)** ball to draw
 
 ### isDrawing
 
@@ -140,7 +199,7 @@ move a ball on the canvas to its next coordinates
 
 **Parameters**
 
--   `ball` **[Ball](#ball)** to move on canvas
+* `ball` **[Ball](#ball)** to move on canvas
 
 Returns **Coordinates** new coordinates where the ball has been moved to
 
@@ -150,8 +209,8 @@ add a ball on the canvas
 
 **Parameters**
 
--   `args` **...any** 
--   `null` **any** {@see Ball}
+* `args` **...any**
+* `null` **any** {@see Ball}
 
 Returns **[Ball](#ball)** ball created
 
@@ -162,7 +221,7 @@ If parameter is true then it launches the drawing loop
 
 **Parameters**
 
--   `triggered` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not function is being manually triggered or triggered via timeout loop (optional, default `false`)
+* `triggered` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not function is being manually triggered or triggered via timeout loop (optional, default `false`)
 
 ### ballMouseHandler
 
@@ -184,7 +243,7 @@ reset the ball position
 
 **Parameters**
 
--   `position` **Coordinates** new coordinates where the ball must be set to
+* `position` **Coordinates** new coordinates where the ball must be set to
 
 ### aggregateForces
 
@@ -203,6 +262,6 @@ Also apply the decay ratio to each force (see [Ball~decayForces](Ball~decayForce
 
 **Parameters**
 
--   `nextPos` **Coordinates** coordinates to move the ball to. Uses [Ball~setPos](Ball~setPos) (optional, default `this.getNextPos()`)
+* `nextPos` **Coordinates** coordinates to move the ball to. Uses [Ball~setPos](Ball~setPos) (optional, default `this.getNextPos()`)
 
 Returns **Coordinates** the new coordinates where the ball has been moved to
