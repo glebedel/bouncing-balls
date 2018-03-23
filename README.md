@@ -17,7 +17,7 @@ Then click on the bookmarklet while you are on a page ([google.com](www.google.c
 Click around the page to create balls which will bounce off of the bottom of the page
 
 Alternatively you can simply copy paste the content of [the file](https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js) into the developer console.
-![](demo/bouncing_google.gif)
+![](./demo/bouncing_google.gif)
 ## Usage
 
 ### Existing canvas
