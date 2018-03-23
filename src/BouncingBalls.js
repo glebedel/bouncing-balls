@@ -28,7 +28,7 @@ class Ball {
   /**
    * Creates an instance of Ball.
    * @constructs Ball
-   * @param {Coordinates} position 
+   * @param {Coordinates} position
    * @param {{
    *       radius?: number,
    *       color?: string,
@@ -41,16 +41,16 @@ class Ball {
    *       gravity = 1,
    *       speed = 5,
    *       gravityDecayRatio = 1.02
-   *     }={}] 
+   *     }={}]
    * @param {Force} [velocity={
    *       x: (Math.random() - 0.5) * 2,
    *       y: (Math.random() - 0.5) * 2,
    *       decayRatio: 1
-   *     }] 
+   *     }]
    * @memberof Ball
    */
   constructor(
-    position: Coordinates,
+    position?: Coordinates,
     {
       radius = 10,
       color = randomColor(),
@@ -64,7 +64,7 @@ class Ball {
       speed?: number,
       gravityDecayRatio?: number
     } = {},
-    velocity: Force = {
+    velocity?: Force = {
       x: (Math.random() - 0.5) * 2,
       y: (Math.random() - 0.5) * 2,
       decayRatio: 1
@@ -166,7 +166,7 @@ export default class BouncingBalls {
    *     }} [{
    *       canvas = window.document.createElement("canvas"),
    *       container = window.document.body
-   *     }={}] 
+   *     }={}]
    * @param {{
    *       gravity?: number,
    *       radius?: number,
@@ -187,7 +187,7 @@ export default class BouncingBalls {
    *       collisionRatio = 0.98,
    *       drawInterval = 20,
    *       canvasClass = "bouncing-balls-canvas"
-   *     }={}] 
+   *     }={}]
    * @memberof BouncingBalls
    */
   constructor(
@@ -302,6 +302,7 @@ export default class BouncingBalls {
    */
   moveBall(ball: Ball): Coordinates {
     let nextPos = ball.getNextPos();
+    // bounce off floor
     if (nextPos.y > this.canvas.height - ball.radius) {
       const aggregate: Coordinates = ball.aggregateForces();
       // calculate bounce factor and add bounce force to ball
@@ -320,15 +321,21 @@ export default class BouncingBalls {
       ball.forces.gravity.y = ball.gravity;
       // position the ball to bottom of canvas (prevents from going through it if gravity y force stronger than bounce)
       nextPos.y = this.canvas.height - ball.radius;
-      // bounce off right of canvas
     }
+    // if bounce off right of canvas
     if (nextPos.x > this.canvas.width - ball.radius) {
       // inverse x translation
       ball.forces.velocity.x *= -1 * this.settings.collisionRatio;
-      // bounce off left of canvas
+      nextPos = ball.getNextPos();
+      // resets the ball at the wall
+      nextPos.x = this.canvas.width - ball.radius;
+      // if bounce off left of canvas
     } else if (nextPos.x - ball.radius < 0) {
+      // inverse x translation
       ball.forces.velocity.x *= -1 * this.settings.collisionRatio;
       nextPos = ball.getNextPos();
+      // resets the ball at the wall
+      nextPos.x = ball.radius;
     }
     return ball.moveNext(nextPos);
     // no bounce or left/right wall bounce
