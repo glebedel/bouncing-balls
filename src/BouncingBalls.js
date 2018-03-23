@@ -12,15 +12,16 @@ type Force = {
 type Coordinates = {
   x: number,
   y: number
+};
 /**
  *
  * @classdesc Add bouncing balls onto a canvas
- * @class BouncingBalls
  * @export
  */
 export default class BouncingBalls {
   /**
    * Creates an instance of BouncingBalls.
+   * @constructors BouncingBalls
    * @param {HTMLCanvasElement} [$0.canvas=document.createElement("canvas")] canvas for bouncing balls
    * @param {HTMLElement} [$0.container=window.document.body] container where canvas is. Used to set canvas' default width/height if canvas doesn't have width/height
    * @param {Object} settings Bouncing balls parameters
