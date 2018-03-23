@@ -180,11 +180,7 @@ npm run karma -- --browser=Chrome --keep-open
     -   `$1.gravity`   (optional, default `1`)
     -   `$1.speed`   (optional, default `5`)
     -   `$1.gravityDecayRatio`   (optional, default `1.02`)
--   `velocity` **Force**  (optional, default `{
-    x:(Math.random()-0.5)*2,
-    y:(Math.random()-0.5)*2,
-    decayRatio:1
-    }`)
+-   `velocity` **Force**  (optional, default `{x:(Math.random()-0.5)*2,y:(Math.random()-0.5)*2,decayRatio:1}`)
 
 ### getNextPos
 

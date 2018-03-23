@@ -18,30 +18,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @classdesc Ball object to store & calculate information (mainly position) of a specific ball
  */
 var Ball = function () {
-  /**
-   * Creates an instance of Ball.
-   * @constructs Ball
-   * @param {Coordinates} position
-   * @param {{
-   *       radius?: number,
-   *       color?: string,
-   *       gravity?: number,
-   *       speed?: number,
-   *       gravityDecayRatio?: number
-   *     }} [{
-   *       radius = 10,
-   *       color = randomColor(),
-   *       gravity = 1,
-   *       speed = 5,
-   *       gravityDecayRatio = 1.02
-   *     }={}]
-   * @param {Force} [velocity={
-   *       x: (Math.random() - 0.5) * 2,
-   *       y: (Math.random() - 0.5) * 2,
-   *       decayRatio: 1
-   *     }]
-   * @memberof Ball
-   */
   function Ball(position) {
     var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
         _ref$radius = _ref.radius,
@@ -175,39 +151,6 @@ var Ball = function () {
 
 
 var BouncingBalls = function () {
-  /**
-   * Creates an instance of BouncingBalls.
-   * @constructs BouncingBalls
-   * @param {{
-   *       canvas?: HTMLCanvasElement,
-   *       container?: HTMLElement
-   *     }} [{
-   *       canvas = window.document.createElement("canvas"),
-   *       container = window.document.body
-   *     }={}]
-   * @param {{
-   *       gravity?: number,
-   *       radius?: number,
-   *       speed?: number,
-   *       click?: boolean,
-   *       gravityDecayRatio?: number,
-   *       bounceDecayRatio?: number,
-   *       collisionRatio?: number,
-   *       drawInterval?: number,
-   *       canvasClass?: string
-   *     }} [{
-   *       gravity = 1,
-   *       speed = 5,
-   *       radius = 10,
-   *       gravityDecayRatio = 1.02,
-   *       bounceDecayRatio = 0.965,
-   *       click = true,
-   *       collisionRatio = 0.98,
-   *       drawInterval = 20,
-   *       canvasClass = "bouncing-balls-canvas"
-   *     }={}]
-   * @memberof BouncingBalls
-   */
   function BouncingBalls() {
     var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
         _ref2$canvas = _ref2.canvas,
