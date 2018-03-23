@@ -4,7 +4,7 @@
 
 ### Existing canvas
 
-Create an instance of bouncing balls with an existing canvas element. See [demo/index.html](<>) code <https://github.com/git/git/blob/master/demo/index.html#L5-L12>
+Create an instance of bouncing balls with an existing canvas element. See [demo/index.html](<>) code <https://github.com/glebedel/bouncing-balls/blob/master/demo/index.html#L5-L12>
 
 ```html
 <body>
@@ -21,7 +21,7 @@ This will use the bassed canvas element as the BouncingBall play ground. By defa
 
 ### Without specified canvas but in a container
 
-Create an instance of bouncing balls with an existing canvas element. See [demo/index.html](<>) code <https://github.com/git/git/blob/master/demo/index.html#L15-L20>
+Create an instance of bouncing balls with an existing canvas element. See [demo/index.html](<>) code <https://github.com/glebedel/bouncing-balls/blob/master/demo/index.html#L15-L20>
 
 ```html
 <body>
@@ -161,21 +161,6 @@ npm run karma -- --browser=Chrome --keep-open
     -   [ballMouseHandler](#ballmousehandler)
 
 ## Ball
-
-**Parameters**
-
--   `position` **Coordinates** 
--   `$1` **any**  (optional, default `{}`)
-    -   `$1.radius`   (optional, default `10`)
-    -   `$1.color`   (optional, default `randomColor()`)
-    -   `$1.gravity`   (optional, default `1`)
-    -   `$1.speed`   (optional, default `5`)
-    -   `$1.gravityDecayRatio`   (optional, default `1.02`)
--   `velocity` **Force**  (optional, default `{
-    x:(Math.random()-0.5)*2,
-    y:(Math.random()-0.5)*2,
-    decayRatio:1
-    }`)
 
 ### getNextPos
 
