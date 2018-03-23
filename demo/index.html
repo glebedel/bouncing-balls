@@ -4,6 +4,9 @@
 
 <body>
   <script src="../dist/bouncingballs.js"></script>
+  <div class="slidecontainer">
+    <span>Speed slider (change the value & click on canvas to create a new ball):</span><input style="vertical-align:middle;" type="range" min="1" max="15" value="5" class="slider" id="bb-speed" oninput="window.bb.settings.speed=this.value; window.bb2.settings.speed=this.value;">
+  </div>
   <div id="existing-canvas">
     <h1>Using an existing Canvas (click within black borders)</h1>
     <canvas id="bb-canvas" width="600px" height="400px" style="border: 1px solid black"></canvas>
