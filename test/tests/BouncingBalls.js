@@ -15,7 +15,7 @@ describe("BouncingBalls instances creation", () => {
     div.id = "bb-container";
     div.style.width = "600px";
     div.style.height = "300px";
-    document.body.appendChild(div);
+    document.body && document.body.appendChild(div);
     console.debug(div.style.width);
     bb2 = new BouncingBalls({ container: div });
     console.debug(bb2.canvas.width);
