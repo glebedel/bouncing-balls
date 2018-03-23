@@ -1,6 +1,6 @@
 /* @flow */
 
-import { setTimeout, clearTimeout } from "timers";
+// import { setTimeout, clearTimeout } from "timers";
 import { randomColor } from "./Colors";
 
 type Force = {
@@ -19,28 +19,34 @@ type Coordinates = {
  * @class Ball
  */
 class Ball {
+  pos: Coordinates;
+  radius: number;
+  color: string;
+  gravity: number;
+  speed: number;
+  forces: { [string]: Force };
   /**
    * Creates an instance of Ball.
    * @constructs Ball
-   * @param {Coordinates} position
+   * @param {Coordinates} position 
    * @param {{
-   *       radius: number,
-   *       color: string,
-   *       gravity: number,
-   *       speed: number,
-   *       gravityDecayRatio: number
+   *       radius?: number,
+   *       color?: string,
+   *       gravity?: number,
+   *       speed?: number,
+   *       gravityDecayRatio?: number
    *     }} [{
    *       radius = 10,
    *       color = randomColor(),
    *       gravity = 1,
    *       speed = 5,
    *       gravityDecayRatio = 1.02
-   *     }={}]
+   *     }={}] 
    * @param {Force} [velocity={
    *       x: (Math.random() - 0.5) * 2,
    *       y: (Math.random() - 0.5) * 2,
    *       decayRatio: 1
-   *     }]
+   *     }] 
    * @memberof Ball
    */
   constructor(
@@ -52,11 +58,11 @@ class Ball {
       speed = 5,
       gravityDecayRatio = 1.02
     }: {
-      radius: number,
-      color: string,
-      gravity: number,
-      speed: number,
-      gravityDecayRatio: number
+      radius?: number,
+      color?: string,
+      gravity?: number,
+      speed?: number,
+      gravityDecayRatio?: number
     } = {},
     velocity: Force = {
       x: (Math.random() - 0.5) * 2,
@@ -106,21 +112,24 @@ class Ball {
    * @memberof Ball
    */
   aggregateForces(): Coordinates {
-    return Object.values(this.forces).reduce(
-      (aggregate: Coordinates, { x, y }: Force) => {
-        aggregate.x += x || 0;
-        aggregate.y += y || 0;
-        return aggregate;
-      },
-      { x: 0, y: 0 }
-    );
+    const aggregate: Coordinates = {
+      x: 0,
+      y: 0
+    };
+    Object.keys(this.forces).forEach((key: string) => {
+      const { x, y }: Force = this.forces[key];
+      aggregate.x += x || 0;
+      aggregate.y += y || 0;
+    });
+    return aggregate;
   }
   /**
    * apply the decay ratio of each force to their x/y components
    * @memberof Ball
    */
   decayForces() {
-    Object.values(this.forces).forEach((force: Force) => {
+    Object.keys(this.forces).forEach((key: string) => {
+      const force: Force = this.forces[key];
       force.x *= force.decayRatio || 1;
       force.y *= force.decayRatio || 1;
     });
@@ -138,31 +147,36 @@ class Ball {
     return nextPos;
   }
 }
-
 /**
  * @classdesc Add bouncing balls onto a canvas
  * @export
  */
 export default class BouncingBalls {
+  balls: Array<Ball>;
+  canvas: HTMLCanvasElement;
+  container: HTMLElement;
+  settings: any;
+  drawing: ?TimeoutID;
   /**
    * Creates an instance of BouncingBalls.
    * @constructs BouncingBalls
    * @param {{
-   *       canvas: HTMLCanvasElement,
-   *       container: HTMLElement
+   *       canvas?: HTMLCanvasElement,
+   *       container?: HTMLElement
    *     }} [{
    *       canvas = window.document.createElement("canvas"),
    *       container = window.document.body
-   *     }={}]
+   *     }={}] 
    * @param {{
-   *       gravity: number,
-   *       radius: number,
-   *       speed: number,
-   *       click: boolean,
-   *       gravityDecayRatio: number,
-   *       bounceDecayRatio: number,
-   *       collisionRatio: number,
-   *       drawInterval: number
+   *       gravity?: number,
+   *       radius?: number,
+   *       speed?: number,
+   *       click?: boolean,
+   *       gravityDecayRatio?: number,
+   *       bounceDecayRatio?: number,
+   *       collisionRatio?: number,
+   *       drawInterval?: number,
+   *       canvasClass?: string
    *     }} [{
    *       gravity = 1,
    *       speed = 5,
@@ -172,8 +186,8 @@ export default class BouncingBalls {
    *       click = true,
    *       collisionRatio = 0.98,
    *       drawInterval = 20,
-   *       canvasClass = 'bouncing-balls-canvas'
-   *     }={}]
+   *       canvasClass = "bouncing-balls-canvas"
+   *     }={}] 
    * @memberof BouncingBalls
    */
   constructor(
@@ -181,8 +195,8 @@ export default class BouncingBalls {
       canvas = window.document.createElement("canvas"),
       container = window.document.body
     }: {
-      canvas: HTMLCanvasElement,
-      container: HTMLElement
+      canvas?: HTMLCanvasElement,
+      container?: HTMLElement
     } = {},
     {
       gravity = 1,
@@ -195,14 +209,15 @@ export default class BouncingBalls {
       drawInterval = 20,
       canvasClass = "bouncing-balls-canvas"
     }: {
-      gravity: number,
-      radius: number,
-      speed: number,
-      click: boolean,
-      gravityDecayRatio: number,
-      bounceDecayRatio: number,
-      collisionRatio: number,
-      drawInterval: number
+      gravity?: number,
+      radius?: number,
+      speed?: number,
+      click?: boolean,
+      gravityDecayRatio?: number,
+      bounceDecayRatio?: number,
+      collisionRatio?: number,
+      drawInterval?: number,
+      canvasClass?: string
     } = {}
   ) {
     this.drawing = null;
@@ -272,7 +287,7 @@ export default class BouncingBalls {
    * @returns {TimeoutID} timeout id of the drawing loop
    * @memberof BouncingBalls
    */
-  start(): TimeoutID {
+  start(): ?TimeoutID {
     if (!this.drawing) {
       console.info("start drawing balls");
       this.draw(true);
@@ -288,7 +303,7 @@ export default class BouncingBalls {
   moveBall(ball: Ball): Coordinates {
     let nextPos = ball.getNextPos();
     if (nextPos.y > this.canvas.height - ball.radius) {
-      const aggregate: Force = ball.aggregateForces();
+      const aggregate: Coordinates = ball.aggregateForces();
       // calculate bounce factor and add bounce force to ball
       const bounce: number = aggregate.y - ball.gravity + ball.gravity * 2;
       const bounceForce: Force = {
@@ -324,7 +339,7 @@ export default class BouncingBalls {
    * @returns {Ball} ball created
    * @memberof BouncingBalls
    */
-  addBall(...args): Ball {
+  addBall(...args: Array<any>): Ball {
     const ball = new Ball(...args);
     // add ball to balls array (so we can keep track of it/move it)
     this.balls.push(ball);
@@ -335,10 +350,10 @@ export default class BouncingBalls {
   /**
    * draw all the BouncingBalls' balls on its canvas
    * If parameter is true then it launches the drawing loop
-   * @param {Boolean} [triggered=false] whether or not function is being manually triggered or triggered via timeout loop
+   * @param {boolean} [triggered=false] whether or not function is being manually triggered or triggered via timeout loop
    * @memberof BouncingBalls
    */
-  draw(triggered: Boolean = false) {
+  draw(triggered: boolean = false) {
     // if drawing is null (drawing has been stopped or isn't started) & triggered parameter is false then no draw
     if (!this.drawing && !triggered) {
       return;
