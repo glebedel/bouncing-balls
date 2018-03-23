@@ -1,5 +1,15 @@
 # Bouncing Balls
 
+## Demos
+
+## webpage
+
+[Using existing canvas or a defined container](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/index.html)
+
+[Covers the document body](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/fullscreen.html)
+
+## bookmarklet
+
 ## Usage
 
 ### Existing canvas
@@ -75,16 +85,6 @@ bb.stop(); // stops the drawing loop (freezes the animation)
 ```javascript
 bb.start(); // starts/resume the drawing loop (unfreeze the animation)
 ```
-
-## Demos
-
-## webpage
-
-[Using existing canvas or a defined container](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/index.html)
-
-[Covers the document body](http://htmlpreview.github.com/?https://github.com/glebedel/boucning/balls/blob/master/demo/fullscreen.html)
-
-## bookmarklet
 
 ## Tools
 
