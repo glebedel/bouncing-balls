@@ -388,8 +388,8 @@ export default class BouncingBalls {
   ballMouseHandler = (e: MouseEvent): Ball => {
     // get click oordinates within the canvas
     const bound = this.canvas.getBoundingClientRect();
-    const x: number = e.pageX - bound.left;
-    const y: number = e.pageY - bound.top;
+    const x: number = e.offsetX;
+    const y: number = e.offsetY;
     const { gravity, speed, gravityDecayRatio, radius } = this.settings;
     // create random radian to derive starting x/y velocity from
     const radians = Math.ceil(Math.random() * 360) * Math.PI / 180;
