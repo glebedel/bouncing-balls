@@ -5,7 +5,7 @@
 <body>
   <script src="../dist/bouncingballs.js"></script>
   <div id="existing-canvas">
-    <h1>Existing Canvas</h1>
+    <h1>Using an existing Canvas (click within black borders)</h1>
     <canvas id="bb-canvas" width="600px" height="400px" style="border: 1px solid black"></canvas>
     <script>
       var bb = new BouncingBalls({ canvas: document.getElementById('bb-canvas') });
@@ -13,7 +13,7 @@
     </script>
   </div>
   <div id="div-container">
-    <h1>Existing Canvas</h1>
+    <h1>Using a div container (click within blue borders)</h1>
     <div id="bb-container" style="width:600px;height:400px;border: 1px solid blue"></div>
     <script>
       var bb2 = new BouncingBalls({ container: document.getElementById('bb-container') });
