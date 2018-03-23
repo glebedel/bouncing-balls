@@ -11,13 +11,14 @@
 ## bookmarklet / developer console
 
 copy paste the following code as a bookmark's url (make sure it's prefixed by `javascript:`)
-[https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js](https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js)
+<https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js>
 Then click on the bookmarklet while you are on a page ([google.com](www.google.com) for example)
 
 Click around the page to create balls which will bounce off of the bottom of the page
 
 Alternatively you can simply copy paste the content of [the file](https://raw.githubusercontent.com/glebedel/bouncing-balls/master/demo/bookmarklet.js) into the developer console.
 ![](./demo/bouncing_google.gif)
+
 ## Usage
 
 ### Existing canvas
@@ -169,6 +170,21 @@ npm run karma -- --browser=Chrome --keep-open
     -   [ballMouseHandler](#ballmousehandler)
 
 ## Ball
+
+**Parameters**
+
+-   `position` **Coordinates** 
+-   `$1` **any**  (optional, default `{}`)
+    -   `$1.radius`   (optional, default `10`)
+    -   `$1.color`   (optional, default `randomColor()`)
+    -   `$1.gravity`   (optional, default `1`)
+    -   `$1.speed`   (optional, default `5`)
+    -   `$1.gravityDecayRatio`   (optional, default `1.02`)
+-   `velocity` **Force**  (optional, default `{
+    x:(Math.random()-0.5)*2,
+    y:(Math.random()-0.5)*2,
+    decayRatio:1
+    }`)
 
 ### getNextPos
 
