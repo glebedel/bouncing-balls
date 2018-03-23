@@ -11,12 +11,11 @@ type Force = {
 
 type Coordinates = {
   x: number,
-  y: number
+  y: number 
 };
 
 /**
  * @classdesc Ball object to store & calculate information (mainly position) of a specific ball
- * @class Ball
  */
 class Ball {
   pos: Coordinates;
